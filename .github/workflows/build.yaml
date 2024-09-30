@@ -20,4 +20,4 @@ jobs:
       - run: pnpm install
       - run: pnpm build
       - run: pnpm build:wp
-      - run: pnpm bulid:rp
+      - run: pnpm build:rp
