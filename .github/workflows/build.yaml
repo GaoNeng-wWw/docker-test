@@ -3,45 +3,41 @@ name: Build
 on: [push, workflow_dispatch]
 
 jobs:
+  ci:
+    permissions:
+      contents: none
+    name: CI
+    needs: [vite, webpack, rspack]
+    runs-on: ubuntu-latest
+    if: 'always()'
+    steps:
+      - name: Failed
+        run: exit 1
+        if: "contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')"
   vite:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-          run_install: false
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: pnpm install
-      - run: pnpm build
-      - run: pnpm build:wp
-      - run: pnpm build:rp
+      - run: npm install
+      - run: npm run build
   webpack:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-          run_install: false
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: pnpm install
-      - run: pnpm build:wp
-      - run: pnpm build:rp
+      - run: npm install
+      - run: npm run build:wp
   rspack:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
-          run_install: false
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: pnpm install
-      - run: pnpm build:rp
+      - run: npm install
+      - run: npm run build:rp
