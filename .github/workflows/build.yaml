@@ -8,14 +8,14 @@ jobs:
       contents: none
     name: CI
     needs: [vite, webpack, rspack]
-    runs-on: [ubuntu-latest, macos-13]
+    runs-on: [ubuntu-latest]
     if: 'always()'
     steps:
       - name: Failed
         run: exit 1
         if: "contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')"
   vite:
-    runs-on: [ubuntu-latest, macos-13]
+    runs-on: [ubuntu-latest, macos-13.0]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,7 +24,7 @@ jobs:
       - run: npm install
       - run: npm run build
   webpack:
-    runs-on: [ubuntu-latest, macos-13]
+    runs-on: [ubuntu-latest, macos-13.0]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -33,7 +33,7 @@ jobs:
       - run: npm install
       - run: npm run build:wp
   rspack:
-    runs-on: [ubuntu-latest, macos-13]
+    runs-on: [ubuntu-latest, macos-13.0]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
