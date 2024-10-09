@@ -8,7 +8,7 @@ jobs:
       contents: none
     name: CI
     needs: [vite, webpack, rspack]
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest, macos-latest]
     if: 'always()'
     steps:
       - name: Failed
