@@ -229,7 +229,7 @@
         @update="onUpdate"
         @check="onCheck"
         @delete="onDelete"
-      />  
+      />
       <tiny-modal
         v-model="addModal"
         show-footer
