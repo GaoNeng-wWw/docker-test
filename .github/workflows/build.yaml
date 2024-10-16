@@ -15,7 +15,7 @@ jobs:
         run: exit 1
         if: "contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')"
   vite:
-    runs-on: [ubuntu-latest, macos-13.0]
+    runs-on: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -23,8 +23,20 @@ jobs:
           node-version: 20
       - run: npm install
       - run: npm run build
+  vite-pnpm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - run: pnpm i
+      - run: pnpm run build
   webpack:
-    runs-on: [ubuntu-latest, macos-13.0]
+    runs-on: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -32,8 +44,20 @@ jobs:
           node-version: 20
       - run: npm install
       - run: npm run build:wp
+  webpack-pnpm:
+    runs-on: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - run: pnpm i
+      - run: pnpm run build:wp
   rspack:
-    runs-on: [ubuntu-latest, macos-13.0]
+    runs-on: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -41,3 +65,15 @@ jobs:
           node-version: 20
       - run: npm install
       - run: npm run build:rp
+  rspack-pnpm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - run: pnpm i
+      - run: pnpm run build:rp
