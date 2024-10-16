@@ -119,8 +119,8 @@
     "vue-loader": "17.4.2",
     "vue-tsc": "1.8.27",
     "webpack": "5.95.0",
-    "webpack-cli": "4.10.0",
-    "webpack-dev-server": "4.15.2"
+    "webpack-cli": "5.1.4",
+    "webpack-dev-server": "5.1.0"
   },
   "engines": {
     "node": ">=14.0.0"
