@@ -7,7 +7,7 @@ jobs:
     permissions:
       contents: none
     name: CI
-    needs: [vite, webpack, rspack]
+    needs: [vite, webpack, rspack, vite-pnpm, webpack-pnpm, rspack-pnpm]
     runs-on: [ubuntu-latest]
     if: 'always()'
     steps:
