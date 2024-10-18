@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup
-        uses: ./action.yml
+        uses: .
       - working-directory: ./vite/web
         run: npm i && npm build
       - working-directory: ./vite/nestJs
@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup
-        uses: ./action.yml
+        uses: .
       - working-directory: ./vite/web
         run: pnpm i && pnpm build
       - working-directory: ./vite/nestJs
@@ -28,7 +28,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup
-        uses: ./action.yml
+        uses: .
       - working-directory: ./webpack/web
         run: npm i && npm build
       - working-directory: ./webpack/nestJs
@@ -38,7 +38,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup
-        uses: ./action.yml
+        uses: .
       - working-directory: ./webpack/web
         run: pnpm i && pnpm build
       - working-directory: ./webpack/nestJs
@@ -48,7 +48,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup
-        uses: ./action.yml
+        uses: .
       - working-directory: ./rspack/web
         run: npm i && npm build
       - working-directory: ./rspack/nestJs
@@ -58,7 +58,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup
-        uses: ./action.yml
+        uses: .
       - working-directory: ./rspack/web
         run: pnpm i && pnpm build
       - working-directory: ./rspack/nestJs
@@ -68,7 +68,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup
-        uses: ./action.yml
+        uses: .
       - working-directory: ./farm/web
         run: npm i && npm build
       - working-directory: ./farm/nestJs
@@ -78,7 +78,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup
-        uses: ./action.yml
+        uses: .
       - working-directory: ./farm/web
         run: pnpm i && pnpm build
       - working-directory: ./farm/nestJs
