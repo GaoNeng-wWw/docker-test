@@ -10,9 +10,9 @@ jobs:
       - name: Setup
         uses: ./
       - working-directory: ./vite/web
-        run: npm i && npm build
+        run: npm i && npm run build
       - working-directory: ./vite/nestJs
-        run: npm i && npm build
+        run: npm i && npm run build
   vite:
     runs-on: ubuntu-latest
     steps:
@@ -30,9 +30,9 @@ jobs:
       - name: Setup
         uses: ./
       - working-directory: ./webpack/web
-        run: npm i && npm build
+        run: npm i && npm run build
       - working-directory: ./webpack/nestJs
-        run: npm i && npm build
+        run: npm i && npm run build
   webpack:
     runs-on: ubuntu-latest
     steps:
@@ -50,9 +50,9 @@ jobs:
       - name: Setup
         uses: ./
       - working-directory: ./rspack/web
-        run: npm i && npm build
+        run: npm i && npm run build
       - working-directory: ./rspack/nestJs
-        run: npm i && npm build
+        run: npm i && npm run build
   rspack:
     runs-on: ubuntu-latest
     steps:
@@ -70,9 +70,9 @@ jobs:
       - name: Setup
         uses: ./
       - working-directory: ./farm/web
-        run: npm i && npm build
+        run: npm i && npm run build
       - working-directory: ./farm/nestJs
-        run: npm i && npm build
+        run: npm i && npm run build
   farm:
     runs-on: ubuntu-latest
     steps:
