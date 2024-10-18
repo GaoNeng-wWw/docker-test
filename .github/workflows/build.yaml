@@ -4,7 +4,7 @@ on: [workflow_dispatch, push]
 
 jobs:
   vite_npm:
-    runs-on: [ubuntu-latest, windows-latest]
+    runs-on: ubuntu-latest
     steps:
       - name: Setup
         uses: ./.github/workflows/common.yaml
@@ -13,7 +13,7 @@ jobs:
       - working-directory: ./vite/nestJs
         run: npm i && npm build
   vite:
-    runs-on: [ubuntu-latest, windows-latest]
+    runs-on: ubuntu-latest
     steps:
       - name: Setup
         uses: ./.github/workflows/common.yaml
@@ -22,7 +22,7 @@ jobs:
       - working-directory: ./vite/nestJs
         run: pnpm i && pnpm build
   webpack_npm:
-    runs-on: [ubuntu-latest, windows-latest]
+    runs-on: ubuntu-latest
     steps:
       - name: Setup
         uses: ./.github/workflows/common.yaml
@@ -31,7 +31,7 @@ jobs:
       - working-directory: ./webpack/nestJs
         run: npm i && npm build
   webpack:
-    runs-on: [ubuntu-latest, windows-latest]
+    runs-on: ubuntu-latest
     steps:
       - name: Setup
         uses: ./.github/workflows/common.yaml
@@ -40,7 +40,7 @@ jobs:
       - working-directory: ./webpack/nestJs
         run: pnpm i && pnpm build
   rspack_npm:
-    runs-on: [ubuntu-latest, windows-latest]
+    runs-on: ubuntu-latest
     steps:
       - name: Setup
         uses: ./.github/workflows/common.yaml
@@ -49,7 +49,7 @@ jobs:
       - working-directory: ./rspack/nestJs
         run: npm i && npm build
   rspack:
-    runs-on: [ubuntu-latest, windows-latest]
+    runs-on: ubuntu-latest
     steps:
       - name: Setup
         uses: ./.github/workflows/common.yaml
@@ -58,7 +58,7 @@ jobs:
       - working-directory: ./rspack/nestJs
         run: pnpm i && pnpm build
   farm_npm:
-    runs-on: [ubuntu-latest, windows-latest]
+    runs-on: ubuntu-latest
     steps:
       - name: Setup
         uses: ./.github/workflows/common.yaml
@@ -67,7 +67,7 @@ jobs:
       - working-directory: ./farm/nestJs
         run: npm i && npm build
   farm:
-    runs-on: [ubuntu-latest, windows-latest]
+    runs-on: ubuntu-latest
     steps:
       - name: Setup
         uses: ./.github/workflows/common.yaml
