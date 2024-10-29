@@ -56,13 +56,12 @@ export class I18Service {
     const i18Item = await this.i18.findOne({
       where: {
         key,
-        content,
         lang: langRecord,
       },
     });
     if (i18Item) {
       throw new HttpException(
-        this.i18n.t('exception.i18.notExists', {
+        this.i18n.t('exception.i18.exists', {
           lang: I18nContext.current().lang,
         }),
         HttpStatus.BAD_REQUEST

@@ -3,11 +3,19 @@
     ref="grid"
     :pager="pagerConfig"
     :fetch-data="fetchData"
-    :edit-config="{ trigger: 'click', mode: 'cell', showStatus: true }"
+    :edit-config="
+      rolePermission.includes('i18n::update')
+        ? { trigger: 'click', mode: 'cell', showStatus: true }
+        : undefined
+    "
     :loading="loading"
     remote-filter
+    refresh
     @edit-closed="onEditClosed"
   >
+    <template #toolbar>
+      <tiny-grid-toolbar refresh></tiny-grid-toolbar>
+    </template>
     <tiny-grid-column field="id" title="id" width="60"></tiny-grid-column>
     <tiny-grid-column
       field="key"
@@ -25,6 +33,7 @@
       field="lang"
       title="lang"
       :editor="{ component: 'select', options }"
+      :format-config="{ async: true, data: options, type: 'enum' }"
       :filter="langFilter"
     ></tiny-grid-column>
     <tiny-grid-column>
@@ -41,13 +50,9 @@
 </template>
 
 <script lang="ts" setup>
-  import {
-    getAllLocalItems,
-    Local,
-    patchLocal,
-    deleteLocale,
-  } from '@/api/local';
+  import { getAllLocalItems, patchLocal, deleteLocale } from '@/api/local';
   import useLoading from '@/hooks/loading';
+  import { useUserStore } from '@/store';
   import { useLocales } from '@/store/modules/locales';
   import { FilterType, InputFilterValue } from '@/types/global';
   import {
@@ -55,6 +60,8 @@
     Grid as TinyGrid,
     GridColumn as TinyGridColumn,
     Button as TinyButton,
+    GridToolbar as TinyGridToolbar,
+    TinyModal,
   } from '@opentiny/vue';
   import { computed, ref } from 'vue';
 
@@ -67,6 +74,8 @@
     content: string;
     lang: string;
   };
+  const userStore = useUserStore();
+  const rolePermission = computed(() => userStore.rolePermission);
 
   const keyFilter = {
     inputFilter: true,
@@ -77,12 +86,15 @@
   const langFilter = {
     enumable: true,
     multi: true,
-    values: localeStore.lang.map((language) => ({
-      label: language.name,
-      value: language.id,
-    })),
+    values: () => {
+      return Promise.resolve(
+        localeStore.lang.map((language) => ({
+          label: language.name,
+          value: language.id,
+        })),
+      );
+    },
   };
-
   const pagerConfig = ref({
     attrs: {
       currentPage: 1,
@@ -179,6 +191,16 @@
             message: '更新成功',
           });
         })
+        .catch((error) => {
+          grid.value.revertData(row);
+          if (error.response && error.response.data) {
+            const errorMessage = error.response.data.message || '未知错误';
+            TinyModal.message({
+              message: errorMessage,
+              status: 'error',
+            });
+          }
+        })
         .finally(() => {
           setLoading(false);
         });
@@ -186,16 +208,21 @@
   };
   const removeLocale = (row: any) => {
     setLoading(true);
-    grid.value
-      .remove(row)
+    deleteLocale(row.id)
       .then(() => {
         localeStore.$patch({
           locales: localeStore.locales.filter((locale) => locale.id !== row.id),
         });
-        return deleteLocale(row.id);
+        grid.value.remove(row);
       })
-      .catch(() => {
-        grid.value.revertData(row);
+      .catch((error) => {
+        if (error.response && error.response.data) {
+          const errorMessage = error.response.data.message || '未知错误';
+          TinyModal.message({
+            message: errorMessage,
+            status: 'error',
+          });
+        }
       })
       .finally(() => {
         setLoading(false);
@@ -205,5 +232,10 @@
   const fetchData = ref({
     api: getData,
     filter: true,
+  });
+  defineExpose({
+    reload: () => {
+      grid.value.handleFetch();
+    },
   });
 </script>

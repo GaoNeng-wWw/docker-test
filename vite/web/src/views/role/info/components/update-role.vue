@@ -13,10 +13,13 @@
   import { updateRole } from '@/api/role';
   import useLoading from '@/hooks/loading';
   import { useI18n } from 'vue-i18n';
+  import { useRouter, useRoute } from 'vue-router';
   import { RoleAddData } from './add-role.vue';
 
   export type UpdateRoleData = Partial<RoleAddData> & { id: number };
   const { loading, setLoading } = useLoading();
+  const router = useRouter();
+  const route = useRoute();
   const emits = defineEmits<{
     close: [];
     confirm: [UpdateRoleData];
@@ -39,6 +42,7 @@
     { deep: true },
   );
   const { t } = useI18n();
+  const componentKey = ref(0);
   const onUpdate = () => {
     setLoading(true);
     updateRole(updateData.value)
@@ -48,6 +52,16 @@
           status: 'success',
         });
         emits('confirm', data);
+        router.go(0);
+      })
+      .catch((error) => {
+        if (error.response && error.response.data) {
+          const errorMessage = error.response.data.message || '未知错误';
+          TinyModal.message({
+            message: errorMessage,
+            status: 'error',
+          });
+        }
       })
       .finally(() => {
         setLoading(false);
